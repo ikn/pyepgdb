@@ -1,6 +1,6 @@
 pyepgdb 0-next.
 
-Python library for parsing epgdb (v2) files produced by
+Python 3 library for parsing epgdb (v2) files produced by
 [Tvheadend](https://tvheadend.org/).
 
 # License
@@ -16,6 +16,13 @@ Build dependencies:
 
 Run `make`, `make install`.  The usual `DESTDIR`, etc. arguments to `make` are
 supported.
+
+# Documentation
+
+Build dependencies:
+- [Sphinx](http://www.sphinx-doc.org/en/master/index.html) (>= 1.8)
+
+Run `make doc`, and open the file `doc/_build/html/index.html`.
 
 # Dependencies
 
