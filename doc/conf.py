@@ -7,7 +7,7 @@ project = 'pyepgdb'
 copyright = '2019, Joseph Lansdowne'
 author = 'Joseph Lansdowne'
 
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'haiku'
 
