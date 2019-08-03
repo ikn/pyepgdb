@@ -1,7 +1,13 @@
-from . import bytedata
+from . import _bytedata as bytedata
 
 
 def _group_tokens (tokens):
+    """Group tokens from `serialisation.parse` into records.
+
+Drops tokens that aren't in records.  Returns an iterator of iterators of
+tokens.
+
+"""
     restorable_tokens = bytedata.result.RestorableIterator(tokens)
     finished = False
 
@@ -14,6 +20,7 @@ def _group_tokens (tokens):
                     restorable_tokens.add(token)
                     return
                 current_path = path_base
+            # record index / 'record' / field index / field property
             if len(token.path) >= 4 and token.path[1] == 'record':
                 yield token
 
@@ -25,6 +32,11 @@ def _group_tokens (tokens):
 
 
 def _transform_record (record):
+    """Transform a record from a list of fields to a dict.
+
+Doesn't handle nested records.
+
+"""
     if isinstance(record, list):
         # value can only be missing if it was an empty sequence of tokens,
         # which should have become a list, which we should transform into a dict
@@ -34,5 +46,15 @@ def _transform_record (record):
 
 
 def parse (tokens):
+    """Group parsed epgdb file tokens into records.
+
+:arg typing.Iterator tokens: Result of :func:`pyepgdb.serialisation.parse`
+
+:return:
+    Records as defined in the epgdb file.  Values are :class:`int`,
+    :class:`str`, :class:`bytes` or nested records
+:rtype: typing.Iterator[typing.Dict]
+
+"""
     for record_tokens in _group_tokens(tokens):
         yield bytedata.result.build_record(record_tokens, _transform_record, 2)
