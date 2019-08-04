@@ -88,7 +88,7 @@ def parse (programmes):
 
 :arg pyepgdb.values.Programme programmes:
 
-:rtype: daaaavbtuk.Programme
+:rtype: dvbtuk.Programme
 
 """
 
