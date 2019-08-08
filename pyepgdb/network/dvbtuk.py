@@ -87,6 +87,7 @@ def parse (programmes):
     """Validate and parse known programme fields specific to this network.
 
 :arg pyepgdb.values.Programme programmes:
+    Programmes parsed in a non-network-specific manner
 
 :rtype: dvbtuk.Programme
 
