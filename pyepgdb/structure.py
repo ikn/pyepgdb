@@ -16,6 +16,7 @@ tokens.
         for token in restorable_tokens:
             path_base = token.path[:1]
             if path_base != current_path:
+                # should be in the next group - put it back on the iterator
                 if current_path is not None:
                     restorable_tokens.add(token)
                     return

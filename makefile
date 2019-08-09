@@ -32,6 +32,7 @@ uninstall:
 doc:
 	mkdir -p doc/_build/
 	cp -t doc/_build/ doc/conf.py doc/*.rst doc/Makefile
-	sphinx-apidoc --module-first --separate -o doc/_build/ -- "$(project_name)"
+	sphinx-apidoc --module-first --separate -o doc/_build/ \
+	    -- "$(project_name)"
 	$(RM) doc/_build/modules.rst
 	cd doc/_build/ && make html

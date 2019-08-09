@@ -78,15 +78,19 @@ def parse (items, store=None):
             pass
         elif section == _EPISODES_SECTION:
             episode = _Episode(item)
+            # always need to store an episode, since there might be another
+            # broadcast for it
             store[_EPISODE_KEY + episode.id_] = episode
         elif section == _BROADCASTS_SECTION:
             broadcast = _Broadcast(item)
             episode = store.get(_EPISODE_KEY + broadcast.episode_id)
+            # only need to store a broadcast if we don't have the episode yet
             if episode is None:
                 store[_BROADCAST_KEY] = broadcast
             else:
                 yield Programme(episode.fields, broadcast.fields)
 
+    # handle broadcasts we found before their episodes
     for store_key, broadcast in store.items():
         if store_key.startswith(_BROADCAST_KEY):
             episode = store[_EPISODE_KEY + broadcast.episode_id]

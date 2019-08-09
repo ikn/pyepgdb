@@ -10,5 +10,6 @@ def parse (f):
 :rtype: typing.BinaryIO
 
 """
+    # skip epgdb-specific header
     f.read(12)
     return gzip.GzipFile(fileobj=f)
