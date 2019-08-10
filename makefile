@@ -21,7 +21,7 @@ clean:
 	$(RM) -r doc/_build/
 
 install:
-	python3 setup.py install --root="$(DESTDIR)" --prefix="$(prefix)"
+	python3 setup.py install --root="$(or $(DESTDIR),/)" --prefix="$(prefix)"
 	mkdir -p "$(DESTDIR)$(docdir)/"
 	$(INSTALL_DATA) README.md "$(DESTDIR)$(docdir)/"
 

@@ -11,7 +11,7 @@ prefix="$2"
 # setuptools logs to stdout for some reason
 { {
     python3 setup.py install \
-        --record=>(cat >&3) --root="$root" --prefix="$prefix"
+        --record=>(cat >&3) --root="${root:-/}" --prefix="$prefix"
 } >&2; } 3>&1 | while read -r f; do
-    rm -dv -- "$root$f"
+    rm -dv -- "${root:-/}$f"
 done
