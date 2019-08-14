@@ -5,13 +5,13 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='pyepgdb',
-    version='0',
+    version='1.0.0',
     author='Joseph Lansdowne',
     author_email='ikn@ikn.org.uk',
     description='Python library for parsing Tvheadend epgdb files',
     long_description=readme_text,
     long_description_content_type='text/markdown',
-    #url='',
+    url='http://ikn.org.uk/pyepgdb',
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3.4",
