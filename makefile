@@ -10,7 +10,7 @@ datadir := $(datarootdir)/$(project_name)
 bindir := $(exec_prefix)/bin
 docdir := $(datarootdir)/doc/$(project_name)
 
-.PHONY: all clean install uninstall doc
+.PHONY: all clean install uninstall doc test coverage
 
 all:
 	python3 setup.py bdist
@@ -19,6 +19,7 @@ clean:
 	find "$(project_name)" -type d -name '__pycache__' | xargs $(RM) -r
 	$(RM) -r build/ dist/ "$(project_name).egg-info/"
 	$(RM) -r doc/_build/
+	$(RM) -r .coverage htmlcov/
 
 install:
 	python3 setup.py install --root="$(or $(DESTDIR),/)" --prefix="$(prefix)"
@@ -36,3 +37,11 @@ doc:
 	    -- "$(project_name)"
 	$(RM) doc/_build/modules.rst
 	cd doc/_build/ && make html
+
+test:
+	PYTHONPATH=. python3 test.py -v
+
+coverage:
+	PYTHONPATH=. coverage3 run test.py
+	coverage3 report
+	coverage3 html

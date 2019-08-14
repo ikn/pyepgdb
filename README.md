@@ -27,3 +27,7 @@ Run `make doc`, and open the file `doc/_build/html/index.html`.
 # Dependencies
 
 - Python 3 (>= 3.4)
+
+# Test
+
+Run `make test` or `make coverage`.

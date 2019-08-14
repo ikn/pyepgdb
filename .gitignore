@@ -3,3 +3,5 @@
 /pyepgdb.egg-info
 __pycache__/
 /doc/_build/
+/.coverage
+/htmlcov/
