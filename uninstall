@@ -3,7 +3,6 @@
 # Silly script to reverse the Setuptools install.  Setuptools doesn't have
 # uninstall functionality (and pip can't uninstall from a provided root), so we
 # do this by installing and asking Setuptools to record what it just installed.
-# This will leave behind empty directories.
 
 root="$1"
 prefix="$2"
