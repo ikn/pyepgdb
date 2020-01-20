@@ -1,4 +1,5 @@
 1.0.0-next:
+ * dvbtuk: support long titles split into the description
 
 1.0.0:
  * initial release

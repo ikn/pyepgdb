@@ -32,6 +32,23 @@ def _localise (strings):
     return networkutil.localise(LANGUAGE, strings)
 
 
+def _normalise_title_desc (title, desc):
+    """Remove common non-content markers from title and description.
+
+Returns (title, desc).
+"""
+    if title.lower().startswith('new: '):
+        title = title[5:].lstrip()
+
+    if title.endswith('...') and desc.startswith('...'):
+        desc_parts = desc.split('. ', maxsplit=1)
+        if len(desc_parts) == 2:
+            title = title[:-3].rstrip() + ' ' + desc_parts[0][3:].lstrip()
+            desc = desc_parts[1].lstrip()
+
+    return (title, desc)
+
+
 class Programme:
     """:class:`pyepgdb.values.Programme` wrapper specific to this network."""
 
@@ -48,12 +65,13 @@ class Programme:
         raw_title = _localise(networkutil.read_value(
             episode, 'title',
             networkutil.validate_map(networkutil.validate(str), True, {})))
-        self.title = (raw_title[5:] if raw_title.startswith('New: ')
-                      else raw_title)
-        """Localised programme title."""
-        self.subtitle = _localise(networkutil.read_value(
+        raw_desc = _localise(networkutil.read_value(
             episode, 'subtitle',
             networkutil.validate_map(networkutil.validate(str), True, {})))
+        title, desc = _normalise_title_desc(raw_title, raw_desc)
+        self.title = title
+        """Localised programme title."""
+        self.subtitle = desc
         """Usually a description.  Often the same as :attr:`summary`."""
 
         self.start = time.gmtime(networkutil.read_value(

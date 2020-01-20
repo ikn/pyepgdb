@@ -7,7 +7,7 @@ from pyepgdb.network import dvbtuk
 from .testutil import get_resource_path
 
 
-class Dvbtuk (TestCase):
+class SingleResult (TestCase):
     def setUp (self):
         with open(get_resource_path('single-result.epgdb'), 'rb') as f:
             self.results = list(dvbtuk.parse(pyepgdb.parse(f)))
@@ -59,3 +59,36 @@ retreat of the ice. [S,AD]\
 
     def test_signed (self):
         self.assertEqual(self.results[0].signed, False)
+
+
+class SplitTitle (TestCase):
+    def setUp (self):
+        path = get_resource_path('single-result-split-title.epgdb')
+        with open(path, 'rb') as f:
+            self.results = list(dvbtuk.parse(pyepgdb.parse(f)))
+
+    def test_count (self):
+        self.assertEqual(len(self.results), 1, 'should be 1 result')
+
+    def test_title (self):
+        self.assertEqual(self.results[0].title, 'Planet Earth')
+
+    def test_subtitle (self):
+        self.assertEqual(self.results[0].subtitle, '''\
+Ice Worlds: David Attenborough's awe-inspiring natural history series visits \
+the frozen worlds of the Arctic and Antarctic. See polar bears negotiate the \
+retreat of the ice. [S,AD]\
+''')
+
+
+class NewTitle (TestCase):
+    def setUp (self):
+        path = get_resource_path('single-result-new-title.epgdb')
+        with open(path, 'rb') as f:
+            self.results = list(dvbtuk.parse(pyepgdb.parse(f)))
+
+    def test_count (self):
+        self.assertEqual(len(self.results), 1, 'should be 1 result')
+
+    def test_title (self):
+        self.assertEqual(self.results[0].title, 'Planet Earth')
