@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='pyepgdb',
-    version='1.0.0.dev',
+    version='1.1.0',
     author='Joseph Lansdowne',
     author_email='ikn@ikn.org.uk',
     description='Python library for parsing Tvheadend epgdb files',

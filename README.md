@@ -1,4 +1,4 @@
-pyepgdb 1.0.0-next.
+pyepgdb 1.1.0.
 
 Python 3 library for parsing epgdb (v2) files produced by
 [Tvheadend](https://tvheadend.org/).
