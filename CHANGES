@@ -1,4 +1,6 @@
 1.1.0-next:
+ * dvbtuk: strip 'New' tags from titles
+ * dvbtuk: strip subtitle if same as summary
 
 1.1.0:
  * dvbtuk: support long titles split into the description

@@ -32,21 +32,30 @@ def _localise (strings):
     return networkutil.localise(LANGUAGE, strings)
 
 
-def _normalise_title_desc (title, desc):
-    """Remove common non-content markers from title and description.
+def _normalise_desc (title, subtitle, summary):
+    """Remove non-content and duplicated data from descriptive fields.
 
-Returns (title, desc).
+Returns (title, subtitle, summary).
 """
-    if title.lower().startswith('new: '):
+    # when subtitle and summary are the same, they're a description
+    if subtitle == summary:
+        subtitle = ''
+
+    # title sometimes starts with an indicator that this is part of a new series
+    norm_title = title.lower()
+    if (norm_title.startswith('new: ') or
+        norm_title.startswith('new. ')
+    ):
         title = title[5:].lstrip()
 
-    if title.endswith('...') and desc.startswith('...'):
-        desc_parts = desc.split('. ', maxsplit=1)
-        if len(desc_parts) == 2:
-            title = title[:-3].rstrip() + ' ' + desc_parts[0][3:].lstrip()
-            desc = desc_parts[1].lstrip()
+    # title is sometimes continued in the subtitle
+    if title.endswith('...') and subtitle.startswith('...'):
+        subtitle_parts = subtitle.split('. ', maxsplit=1)
+        if len(subtitle_parts) == 2:
+            title = title[:-3].rstrip() + ' ' + subtitle_parts[0][3:].lstrip()
+            subtitle = subtitle_parts[1].lstrip()
 
-    return (title, desc)
+    return (title, subtitle, summary)
 
 
 class Programme:
@@ -65,14 +74,18 @@ class Programme:
         raw_title = _localise(networkutil.read_value(
             episode, 'title',
             networkutil.validate_map(networkutil.validate(str), True, {})))
-        raw_desc = _localise(networkutil.read_value(
+        raw_subtitle = _localise(networkutil.read_value(
             episode, 'subtitle',
             networkutil.validate_map(networkutil.validate(str), True, {})))
-        title, desc = _normalise_title_desc(raw_title, raw_desc)
+        raw_summary = _localise(networkutil.read_value(
+            broadcast, 'summary',
+            networkutil.validate_map(networkutil.validate(str), True, {})))
+        title, subtitle, summary = _normalise_desc(
+            raw_title, raw_subtitle, raw_summary)
         self.title = title
         """Localised programme title."""
-        self.subtitle = desc
-        """Usually a description.  Often the same as :attr:`summary`."""
+        self.subtitle = subtitle
+        """Localised programme subtitle.  Often empty."""
 
         self.start = time.gmtime(networkutil.read_value(
             broadcast, 'start', networkutil.validate(int)))
@@ -83,10 +96,8 @@ class Programme:
         self.channel = networkutil.read_value(
             broadcast, 'channel', networkutil.validate(str))
         """Identifier corresponding to the channel hosting the broadcast."""
-        self.summary = _localise(networkutil.read_value(
-            broadcast, 'summary',
-            networkutil.validate_map(networkutil.validate(str), True, {})))
-        """Broadcast description."""
+        self.summary = summary
+        """Localised broadcast description."""
         self.widescreen = bool(networkutil.read_value(
             broadcast, 'is_widescreen', networkutil.validate(int, True, 0)))
         """Whether the broadcast is in widescreen."""
