@@ -1,4 +1,4 @@
-1.1.0-next:
+1.2.0:
  * dvbtuk: strip 'New' tags from titles
  * dvbtuk: strip subtitle if same as summary
 
