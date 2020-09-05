@@ -11,7 +11,7 @@ setuptools.setup(
     description='Python library for parsing Tvheadend epgdb files',
     long_description=readme_text,
     long_description_content_type='text/markdown',
-    url='http://ikn.org.uk/pyepgdb',
+    url='http://ikn.org.uk/lib/pyepgdb',
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3.4",

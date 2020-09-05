@@ -3,7 +3,7 @@ pyepgdb 1.2.0-next.
 Python 3 library for parsing epgdb (v2) files produced by
 [Tvheadend](https://tvheadend.org/).
 
-http://ikn.org.uk/pyepgdb
+http://ikn.org.uk/lib/pyepgdb
 
 # License
 
