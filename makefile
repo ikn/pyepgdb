@@ -1,13 +1,9 @@
 project_name := pyepgdb
 
-INSTALL_PROGRAM := install
 INSTALL_DATA := install -m 644
 
 prefix := /usr/local
 datarootdir := $(prefix)/share
-exec_prefix := $(prefix)
-datadir := $(datarootdir)/$(project_name)
-bindir := $(exec_prefix)/bin
 docdir := $(datarootdir)/doc/$(project_name)
 
 .PHONY: all clean install uninstall doc test coverage
@@ -21,10 +17,11 @@ clean:
 	$(RM) -r doc/_build/
 	$(RM) -r .coverage htmlcov/
 
-install:
+install: doc
 	python3 setup.py install --root="$(or $(DESTDIR),/)" --prefix="$(prefix)"
 	mkdir -p "$(DESTDIR)$(docdir)/"
 	$(INSTALL_DATA) README.md "$(DESTDIR)$(docdir)/"
+	cp -rT doc/_build/html "$(DESTDIR)$(docdir)/api"
 
 uninstall:
 	./uninstall "$(DESTDIR)" "$(prefix)"
